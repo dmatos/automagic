@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+selenium = "*"
+coloredlogs = "*"
+requests = "*"
+pyyaml = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+boto3 = "*"
+zeep = "*"
+suds-py3 = "*"
+pyvirtualdisplay = "*"
+python-xlib = "*"
+aiohttp = "*"
+asyncio = "*"
+aiohttp-proxy = "*"
+selenium-wire = {version="==1.2.3", index="pypi"}
+pdfkit = "*"
+
+[requires]
+python_version = "3.6"

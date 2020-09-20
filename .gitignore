@@ -1,0 +1,17 @@
+#arquivos de log
+log/*
+*.log
+
+#drivers baixados
+crawler-projudi-jobs/driver/*
+
+#IDE
+.idea/
+
+#artefatos da build
+venv/
+target/
+src/crawler.egg-info/
+*.pyc
+src/tmp/
+out/
