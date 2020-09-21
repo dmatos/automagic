@@ -6,7 +6,7 @@ from seleniumwire import webdriver as wirewebdriver
 import os
 import zipfile
 
-from crawler.util.logger import logger
+from app.util.logger import logger
 
 def _get_manifest_json():
     manifest_json = """
@@ -86,17 +86,6 @@ def inicializar_driver(download_dir, headless=True, proxy=None):
         "plugins.always_open_pdf_externally": True
     })
 
-    # if proxy is not None and not headless:
-    #     pluginfile = 'resources/proxy_auth_plugin.zip'
-    #
-    #     with zipfile.ZipFile(pluginfile, 'w') as zp:
-    #         zp.writestr("manifest.json", _get_manifest_json())
-    #         zp.writestr("background.js", _get_background_js(
-    #             proxy.proxy_ip, proxy.proxy_port, proxy.username, proxy.password))
-    #     options.add_extension(pluginfile)
-    # elif proxy is not None and headless:
-    #     logger.error('Chrome nao funciona com extensão de proxy em modo headless')
-
     driver_path = os.path.join(os.getcwd(), 'resources/chromedriver')
 
     driver = None
@@ -134,7 +123,7 @@ def inicializar_driver(download_dir, headless=True, proxy=None):
 
 
 if __name__=='__main__':
-    driver = inicializar_driver('/opt/oito/crawler-projudi/crawler_projudi_repo/')
+    driver = inicializar_driver('resources/downloads')
     driver.get('https://www.google.com')
     body = driver.find_element(By.TAG_NAME, 'body')
     logger.info(body.get_attribute('innerHTML'))
