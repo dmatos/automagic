@@ -46,17 +46,24 @@ if __name__=='__main__':
 
         edition = driver.find_element(By.XPATH, '/html/body/div[5]/section[1]/div/section/div[3]/div[1]/div/a')
         market_price = driver.find_element(By.CLASS_NAME, 'price-point__data')
-        #total_prices = driver.find_element(By.CLASS_NAME, "product-details__listing-count-header") NÃO ESTA FUNCIONANDO
+
+        time.sleep(1)
+
+        detalhes_do_produto = driver.find_element(By.CLASS_NAME, "product-details__actions")
+        detalhes_de_preco = detalhes_do_produto.find_element(By.CLASS_NAME, "product-details__listing-count")
+        total_prices = detalhes_de_preco.find_element(By.CLASS_NAME, "product-details__listing-count-header")
         rarity = driver.find_element(By.XPATH, "/html/body/div[5]/section[1]/div/section/div[3]/table/tbody/tr/td/dl/dd[1]")
+
+        logger.info(total_prices.get_attribute('innerHTML'))
 
         logger.info("___________________________________________________")
         logger.info("Card Name: {}".format(carta_procurada))
         logger.info("Edition: {}".format(edition.text))
         logger.info("Rarity, #: {}".format(rarity.text))
-        #logger.info("Total Prices: {}".format(total_prices.text))#NÃO FUNCIONA SEMPRE
+        logger.info("Total Prices: {}".format(total_prices.text))
         logger.info("Market Price: {}".format(market_price.text))
         logger.info("___________________________________________________")
-        #input("tecle ENTER para continuar")
+        input("tecle ENTER para continuar")
 
 
     #input("tecle ENTER para terminar")
