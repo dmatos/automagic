@@ -40,7 +40,7 @@ class TCGCrawler(BaseCrawler):
         return int(numero_de_paginas)
 
     def _raspar_lojas(self, driver):
-        total_prices_el = WebDriverWait(driver, 15).until(
+        total_prices_el = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.ID, "totalPrices")))
         total_prices_data = ''
         count_sencods, max_seconds = 0, 10
@@ -49,7 +49,7 @@ class TCGCrawler(BaseCrawler):
             time.sleep(1)
             count_sencods += 1
         logger.info("Total Prices: {}".format(total_prices_data))
-        tabela_de_precos = WebDriverWait(driver, 15).until(
+        tabela_de_precos = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, "priceTableWrapper")))
         try:
             #TODO raspar as demais paǵinas de lojas, quando houver
@@ -64,7 +64,7 @@ class TCGCrawler(BaseCrawler):
                 estoque_el = loja.find_element(By.CLASS_NAME, "product-listing__qty-available")
                 estoque_data = estoque_el.get_attribute('innerHTML')
                 conservacao_el = loja.find_element(By.CLASS_NAME, "product-listing__condition")
-                conservacao_data = conservacao_el.get_attribute('innerHTML')
+                conservacao_data = conservacao_el.find_element(By.TAG_NAME, 'a').get_attribute('innerHTML')
 
                 logger.info("nome da loja: {}".format(nome_da_loja_data))
                 logger.info("preço: {}".format(preco_data))
@@ -81,15 +81,15 @@ class TCGCrawler(BaseCrawler):
 
     def _raspar_dados_carta(self, driver, link):
         driver.get(link)
-        card_name_el = WebDriverWait(driver, 15).until(
+        card_name_el = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'product-details__name')))
         card_name_data = card_name_el.get_attribute('innerHTML')
-        edition_el = WebDriverWait(driver, 15).until(
+        edition_el = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'product-details__set')))
         edition_data = edition_el.find_element(By.TAG_NAME, 'a').get_attribute('innerHTML')
         market_price_el = driver.find_element(By.CLASS_NAME, 'price-point__data')
         market_price_data = market_price_el.get_attribute('innerHTML')
-        table_el = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CLASS_NAME, 'table')))
+        table_el = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, 'table')))
         term_els = table_el.find_elements(By.CLASS_NAME, 'product-description__term')
         value_els = table_el.find_elements(By.CLASS_NAME, 'product-description__value')
         terms_values = {}
@@ -120,7 +120,7 @@ class TCGCrawler(BaseCrawler):
             #logger.info("Tipo: {}".format(type(lista_de_cartas)))
             #logger.info("{}".format(lista_de_cartas))
             driver.get(self.url)
-            barra_de_busca = WebDriverWait(driver, 15).until(
+            barra_de_busca = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.TAG_NAME, 'input')))
 
             num_de_cartas = len(lista_de_cartas)

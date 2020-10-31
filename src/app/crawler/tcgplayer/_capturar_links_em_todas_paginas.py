@@ -16,7 +16,7 @@ def capturar_links_em_todas_paginas(driver, quantidade_de_paginas):
 
         #time.sleep(1)
 
-        pagina_de_resultados = WebDriverWait(driver, 15).until(
+        pagina_de_resultados = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'search-results')))
         resultados = pagina_de_resultados.find_elements(By.CLASS_NAME, 'search-result')
 

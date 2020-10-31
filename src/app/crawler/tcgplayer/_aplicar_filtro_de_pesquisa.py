@@ -8,15 +8,15 @@ from selenium.common.exceptions import TimeoutException
 
 def aplicar_filtro_de_pesquisa(driver):
 
-    botao_de_filtro = WebDriverWait(driver, 15).until(
+    botao_de_filtro = WebDriverWait(driver, 5).until(
         EC.element_to_be_clickable((By.CLASS_NAME, 'button--toggle-filters')))
     botao_de_filtro.click()
 
     try:
-        WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.ID, 'Magic:TheGathering-filter')))
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, 'Magic:TheGathering-filter')))
     except TimeoutException as ex:
         logger.exception(ex)
-        fechar_filtro = WebDriverWait(driver, 15).until(
+        fechar_filtro = WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.CLASS_NAME, 'button--dismiss')))
         fechar_filtro.click()
         return False
@@ -30,12 +30,12 @@ def aplicar_filtro_de_pesquisa(driver):
             checkbox.click()
             break
 
-    WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'Cards-filter')))
+    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, 'Cards-filter')))
 
     #checkbox = driver.find_element(By.XPATH, "/html/body/div[1]/div/section[2]/section/div[1]/div[2]/div[2]/div[3]/div/span[1]/label/span[1]")
     #checkbox.click()
 
-    fechar_filtro = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.CLASS_NAME, 'button--dismiss')))
+    fechar_filtro = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CLASS_NAME, 'button--dismiss')))
     fechar_filtro.click()
 
     return True
