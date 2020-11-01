@@ -1,16 +1,18 @@
 # coding=utf8
 
+from threading import Thread
 import time
 from app.util.logger import logger
 
 
-class BaseCrawler:
+class BaseCrawler(Thread):
 
     def __init__(self):
+        super().__init__()
         logger.info('BaseCrawler.__init__')
         self.tempo_inicial = 0
 
-    def crawl(self):
+    def run(self):
         """Inicializa a busca de informações no site"""
         logger.info('Método não implementado')
         pass

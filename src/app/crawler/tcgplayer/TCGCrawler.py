@@ -19,13 +19,14 @@ from app.tools import ChromeDriver
 
 class TCGCrawler(BaseCrawler):
 
-    def __init__(self):
+    def __init__(self, lista_de_cartas):
         super().__init__()
         logger.info('Inicializando TCGCrawler')
         self.driver = None
         self.url = 'https://www.tcgplayer.com/'
         self.query_string = 'search/magic/product?productLineName=magic&q='
         self.tempo_inicial = time.time()
+        self.lista_de_cartas = lista_de_cartas
 
     def _paginas_count(self, driver):
         """Conta o número de páginas do resultado"""
@@ -111,23 +112,19 @@ class TCGCrawler(BaseCrawler):
 
         self._raspar_lojas(driver)
 
-    def _raspar_lista_e_dados(self, esconder_navegador=True):
+    def _raspar_cartas(self, esconder_navegador=True):
         chrome = ChromeDriver()
         driver = chrome.inicializar_driver('resources/downloads', headless=esconder_navegador)
         try:
-            cartas_service = ListaCartasService()
-            lista_de_cartas = cartas_service.buscar_cartas_scryfall()
             #logger.info("Tipo: {}".format(type(lista_de_cartas)))
             #logger.info("{}".format(lista_de_cartas))
             driver.get(self.url)
-            barra_de_busca = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.TAG_NAME, 'input')))
 
-            num_de_cartas = len(lista_de_cartas)
+            num_de_cartas = len(self.lista_de_cartas)
             self.tempo_inical = time.time()
 
             for index in range(0, num_de_cartas):
-                carta = lista_de_cartas[index]
+                carta = self.lista_de_cartas[index]
                 if carta.find('/') != -1:
                     # ignorar de / para frente no nome da cata
                     carta = carta[:carta.find('/')]
@@ -148,5 +145,5 @@ class TCGCrawler(BaseCrawler):
             if driver is not None:
                 driver.quit()
 
-    def crawl(self):
-        self._raspar_lista_e_dados()
+    def run(self):
+        self._raspar_cartas()
