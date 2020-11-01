@@ -17,7 +17,7 @@ if os.path.exists(_path):
             config = yaml.safe_load(f.read())
             logging.config.dictConfig(config)
             coloredlogs.install(fmt=config['formatters']['standard']['format'],
-                                level=logging.INFO)
+                                level=config['handlers']['console']['level'])
         except Exception as e:
             print(e)
             print('Error in Logging Configuration. Using default configs')
