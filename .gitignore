@@ -1,5 +1,6 @@
 #arquivos de log
 log/*
+*.log
 *.log.*
 
 #drivers baixados
